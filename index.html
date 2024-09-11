@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Bill Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        input, button {
+            margin: 10px 0;
+        }
+        label {
+            font-weight: bold;
+        }
+        .readonly {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <h2>Water Bill Calculator</h2>
+    <form id="waterBillForm">
+        <!-- 1. Water Bill for this month -->
+        <label>Water Bill for this Month (₹):</label><br>
+        <input type="number" id="totalBill" required><br>
+
+        <!-- 2. Ground Floor Deduction -->
+        <label>Ground Floor Deduction (₹):</label><br>
+        <input type="number" id="groundFloorDeduction" value="350" readonly class="readonly"><br>
+
+        <!-- 3. Water Bill after Deduction -->
+        <label>Water Bill after Deduction (₹):</label><br>
+        <input type="number" id="adjustedBill" readonly class="readonly"><br>
+
+        <!-- 4. Total Water Meters Reading (liters) -->
+        <label>Total Water Meters Reading (liters):</label><br>
+        <input type="number" id="totalConsumption" required><br>
+
+        <!-- 5. First Floor Consumption -->
+        <label>First Floor Consumption (liters):</label><br>
+        <input type="number" id="firstFloorConsumption" required><br>
+
+        <!-- 6. First Floor Bill -->
+        <label>First Floor Bill (₹):</label><br>
+        <input type="number" id="firstFloorBill" readonly class="readonly"><br>
+
+        <!-- 7. Second Floor Consumption -->
+        <label>Second Floor Consumption (liters):</label><br>
+        <input type="number" id="secondFloorConsumption" required><br>
+
+        <!-- 8. Second Floor Bill -->
+        <label>Second Floor Bill (₹):</label><br>
+        <input type="number" id="secondFloorBill" readonly class="readonly"><br>
+
+        <!-- 9. Third Floor Consumption -->
+        <label>Third Floor Consumption (liters):</label><br>
+        <input type="number" id="thirdFloorConsumption" required><br>
+
+        <!-- 10. Third Floor Bill -->
+        <label>Third Floor Bill (₹):</label><br>
+        <input type="number" id="thirdFloorBill" readonly class="readonly"><br>
+
+        <button type="button" onclick="calculateBill()">Calculate</button>
+    </form>
+
+    <script>
+        function calculateBill() {
+            // Get inputs
+            var totalBill = parseFloat(document.getElementById('totalBill').value);
+            var groundFloorDeduction = parseFloat(document.getElementById('groundFloorDeduction').value);
+            var totalConsumption = parseFloat(document.getElementById('totalConsumption').value);
+            var firstFloorConsumption = parseFloat(document.getElementById('firstFloorConsumption').value);
+            var secondFloorConsumption = parseFloat(document.getElementById('secondFloorConsumption').value);
+            var thirdFloorConsumption = parseFloat(document.getElementById('thirdFloorConsumption').value);
+
+            // 3. Calculate Water Bill after Deduction
+            var adjustedBill = totalBill - groundFloorDeduction;
+            document.getElementById('adjustedBill').value = adjustedBill.toFixed(2);
+
+            // 6. Calculate First Floor Bill
+            var firstFloorBill = (firstFloorConsumption / totalConsumption) * adjustedBill;
+            document.getElementById('firstFloorBill').value = firstFloorBill.toFixed(2);
+
+            // 8. Calculate Second Floor Bill
+            var secondFloorBill = (secondFloorConsumption / totalConsumption) * adjustedBill;
+            document.getElementById('secondFloorBill').value = secondFloorBill.toFixed(2);
+
+            // 10. Calculate Third Floor Bill
+            var thirdFloorBill = (thirdFloorConsumption / totalConsumption) * adjustedBill;
+            document.getElementById('thirdFloorBill').value = thirdFloorBill.toFixed(2);
+        }
+    </script>
+</body>
+</html>
